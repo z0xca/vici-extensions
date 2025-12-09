@@ -49,6 +49,10 @@
           "value": "kde-plasma"
         },
         {
+          "title": "MPVPaper",
+          "value": "mpvpaper"
+        },
+        {
           "title": "Custom (Set custom command in the extension preferences)",
           "value": "custom"
         }
@@ -177,6 +181,14 @@
       "type": "textfield",
       "required": false,
       "default": "60"
+    },
+    {
+      "name": "mpvpaperSocket",
+      "title": "MPVPaper socket path",
+      "description": "The path to an mpvpaper socket to connect to",
+      "type": "textfield",
+      "required": false,
+      "default": "/run/user/1000/mpvpaper.sock"
     },
     {
       "name": "colorGenTool",

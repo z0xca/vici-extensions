@@ -3,6 +3,7 @@ import {
   WallpaperProviderMetadata,
 } from "../models/wallpaper-provider";
 import { Awww } from "../providers/wallpapers/awww";
+import { MPVPaper } from "../providers/wallpapers/mpvpaper";
 
 export const listProviders = (): WallpaperProviderMetadata[] => {
   return [
@@ -46,6 +47,9 @@ export const providerFromPref = (
         prefs.awwwtransitionStep,
         prefs.awwwtransitionDuration,
       );
+    }
+    case "mpvpaper": {
+      return new MPVPaper(prefs.mpvpaperSocket);
     }
     case "kde-plasma":
     case "custom": {

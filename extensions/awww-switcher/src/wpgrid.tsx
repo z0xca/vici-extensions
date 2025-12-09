@@ -70,6 +70,7 @@ export default function DisplayGrid() {
         <Grid.Dropdown
           tooltip="Change Wallpaper Provider"
           storeValue={true}
+          defaultValue={preferences.provider}
           onChange={(newProvider) => {
             setSelectedProvider(providerFromPref(preferences, newProvider));
           }}
