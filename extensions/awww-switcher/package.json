@@ -326,8 +326,10 @@
   },
   "dependencies": {
     "@vicinae/api": "^0.16.2",
+    "dbus-next": "^0.10.2",
     "image-size": "^2.0.2",
-    "jimp": "^1.6.0"
+    "jimp": "^1.6.0",
+    "x11": "^2.3.0"
   },
   "devDependencies": {
     "eslint": "^9.39.1",

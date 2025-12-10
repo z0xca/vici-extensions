@@ -4,6 +4,7 @@ import {
 } from "../models/wallpaper-provider";
 import { Awww } from "../providers/wallpapers/awww";
 import { MPVPaper } from "../providers/wallpapers/mpvpaper";
+import { PlasmaWallpaper } from "../providers/wallpapers/plasma";
 
 export const listProviders = (): WallpaperProviderMetadata[] => {
   return [
@@ -51,7 +52,10 @@ export const providerFromPref = (
     case "mpvpaper": {
       return new MPVPaper(prefs.mpvpaperSocket);
     }
-    case "kde-plasma":
+    case "kde-plasma": {
+      return new PlasmaWallpaper();
+    }
+
     case "custom": {
       throw new Error("Provider not yet implemented.");
     }
