@@ -191,6 +191,14 @@
       "default": "/run/user/1000/mpvpaper.sock"
     },
     {
+      "name": "customProviderCmd",
+      "title": "Custom Provider Command",
+      "description": "Command to run for the custom wallpaper provider, %p will be replaced with the image path and %d with the display name.",
+      "type": "textfield",
+      "required": false,
+      "placeholder": "plasma-apply-wallpaperimage '%p'"
+    },
+    {
       "name": "colorGenTool",
       "title": "Color Generator",
       "description": "Which color generation tool do you use?",
@@ -325,7 +333,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@vicinae/api": "^0.16.2",
+    "@vicinae/api": "^0.16.14",
     "dbus-next": "^0.10.2",
     "image-size": "^2.0.2",
     "jimp": "^1.6.0",

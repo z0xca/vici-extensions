@@ -3,6 +3,7 @@ import {
   WallpaperProviderMetadata,
 } from "../models/wallpaper-provider";
 import { Awww } from "../providers/wallpapers/awww";
+import { CustomProvider } from "../providers/wallpapers/custom";
 import { MPVPaper } from "../providers/wallpapers/mpvpaper";
 import { PlasmaWallpaper } from "../providers/wallpapers/plasma";
 
@@ -57,7 +58,7 @@ export const providerFromPref = (
     }
 
     case "custom": {
-      throw new Error("Provider not yet implemented.");
+      return new CustomProvider(prefs.customProviderCmd);
     }
   }
 };
