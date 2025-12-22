@@ -10,6 +10,8 @@ export default async function RandomWallpaper() {
   const awwwDuration: number = parseInt(getPreferenceValues().transitionDuration) || 3;
   const awwwFPS: number = parseInt(getPreferenceValues().transitionFPS) || 60;
   const colorGen: string = getPreferenceValues().colorGenTool || "none";
+  const matugenColorScheme: string =
+    getPreferenceValues().matugenColorScheme || "scheme-tonal-spot";
   type Preferences = {
     toggleVicinaeSetting: boolean;
   };
@@ -71,6 +73,7 @@ export default async function RandomWallpaper() {
         awwwDuration,
         preferences.toggleVicinaeSetting,
         colorGen,
+        matugenColorScheme,
         postProduction,
         postCommandString,
         awwwFPS,
@@ -84,6 +87,7 @@ export default async function RandomWallpaper() {
         awwwDuration,
         preferences.toggleVicinaeSetting,
         colorGen,
+        matugenColorScheme,
         postProduction,
         postCommandString,
         awwwFPS,

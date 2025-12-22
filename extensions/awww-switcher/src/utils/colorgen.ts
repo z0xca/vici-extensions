@@ -3,12 +3,15 @@ import { exec, execSync } from "child_process";
 export const callColorGen = async (
   path: string,
   ColorGen: string,
+  matugenColorScheme?: string
 ): Promise<boolean> => {
   let command: string;
 
   switch (ColorGen.toLowerCase()) {
     case "matugen":
-      command = `matugen image ${path}`;
+      command = `matugen image "${path}" --type ${
+        matugenColorScheme || "scheme-tonal-spot"
+      }`;
       break;
 
     case "pywal":
