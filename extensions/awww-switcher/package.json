@@ -53,6 +53,10 @@
           "value": "mpvpaper"
         },
         {
+          "title": "Hyprpaper",
+          "value": "hyprpaper"
+        },
+        {
           "title": "Custom (Set custom command in the extension preferences)",
           "value": "custom"
         }

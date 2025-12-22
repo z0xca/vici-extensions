@@ -4,6 +4,7 @@ import {
 } from "../models/wallpaper-engine";
 import { Awww } from "../engines/wallpapers/awww";
 import { CustomEngine } from "../engines/wallpapers/custom";
+import { Hyprpaper } from "../engines/wallpapers/hyprpaper";
 import { MPVPaper } from "../engines/wallpapers/mpvpaper";
 import { PlasmaWallpaper } from "../engines/wallpapers/plasma";
 
@@ -23,6 +24,11 @@ export const listEngines = (): WallpaperEngineMetadata[] => {
       name: "MPV Paper",
       id: "mpvpaper",
       icon: { source: "provider-icons/mpv.png" },
+    },
+    {
+      name: "Hyprpaper",
+      id: "hyprpaper",
+      icon: { source: "provider-icons/hyprpaper.png" },
     },
     {
       name: "Custom (see preferences)",
@@ -52,6 +58,9 @@ export const engineFromPref = (
     }
     case "mpvpaper": {
       return new MPVPaper(prefs.mpvpaperSocket);
+    }
+    case "hyprpaper": {
+      return new Hyprpaper();
     }
     case "kde-plasma": {
       return new PlasmaWallpaper();
