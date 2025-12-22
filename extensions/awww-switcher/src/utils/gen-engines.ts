@@ -13,22 +13,22 @@ export const listEngines = (): WallpaperEngineMetadata[] => {
     {
       name: "AWWW Deamon",
       id: "awww",
-      icon: { source: "provider-icons/LGFae.png" },
+      icon: { source: "engine-icons/LGFae.png" },
     },
     {
       name: "KDE Plasma",
       id: "kde-plasma",
-      icon: { source: "provider-icons/kde.png" },
+      icon: { source: "engine-icons/kde.png" },
     },
     {
       name: "MPV Paper",
       id: "mpvpaper",
-      icon: { source: "provider-icons/mpv.png" },
+      icon: { source: "engine-icons/mpv.png" },
     },
     {
       name: "Hyprpaper",
       id: "hyprpaper",
-      icon: { source: "provider-icons/hyprpaper.png" },
+      icon: { source: "engine-icons/hyprpaper.png" },
     },
     {
       name: "Custom (see preferences)",
@@ -44,7 +44,7 @@ export const engineFromPref = (
 ): WallpaperEngine => {
   const selected_engine: string = overrideSelectedEngine
     ? overrideSelectedEngine
-    : prefs.provider;
+    : prefs.engine;
 
   switch (selected_engine) {
     default:
@@ -67,7 +67,7 @@ export const engineFromPref = (
     }
 
     case "custom": {
-      return new CustomEngine(prefs.customProviderCmd);
+      return new CustomEngine(prefs.customEngineCmd);
     }
   }
 };

@@ -1,11 +1,11 @@
 import { WindowManagement } from "@vicinae/api/dist";
-import { WallpaperProvider } from "../../models/wallpaper-engine";
+import { WallpaperEngine } from "../../models/wallpaper-engine";
 import { exec } from "child_process";
 import { promisify } from "util";
 
 const execAsync = promisify(exec);
 
-export class MPVPaper implements WallpaperProvider {
+export class MPVPaper implements WallpaperEngine {
   socket_url: string;
 
   constructor(socket_url?: string) {

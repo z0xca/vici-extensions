@@ -1,5 +1,5 @@
 import { WindowManagement } from "@vicinae/api/dist";
-import { WallpaperProvider } from "../../models/wallpaper-engine";
+import { WallpaperEngine } from "../../models/wallpaper-engine";
 import { sessionBus, MessageBus, Variant } from "dbus-next";
 
 interface PlasmaShellInterface {
@@ -12,7 +12,7 @@ interface PlasmaShellInterface {
   ): Promise<void>;
 }
 
-export class PlasmaWallpaper implements WallpaperProvider {
+export class PlasmaWallpaper implements WallpaperEngine {
   bus: MessageBus;
 
   constructor() {
