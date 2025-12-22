@@ -11,6 +11,7 @@ import {
 import { createHash } from "node:crypto";
 import { useEffect, useState } from "react";
 import { WallpaperEngine } from "./models/wallpaper-engine";
+import { callColorGen } from "./utils/colorgen";
 import { listEngines, engineFromPref } from "./utils/gen-providers";
 import { getImagesFromPath, Image } from "./utils/image";
 
@@ -127,6 +128,18 @@ export default function DisplayGrid() {
                         onAction={() => {
                           selectedEngine
                             .setWallpaper(w.fullpath)
+                            .then(() => {
+                              if (
+                                preferences.colorGenTool &&
+                                preferences.colorGenTool !== "none"
+                              ) {
+                                callColorGen(
+                                  w.fullpath,
+                                  preferences.colorGenTool,
+                                  preferences.matugenColorScheme
+                                );
+                              }
+                            })
                             .catch((err) => {
                               showToast({
                                 title: "Unable to set wallpaper !",
@@ -173,6 +186,18 @@ export default function DisplayGrid() {
                               onAction={() => {
                                 selectedEngine
                                   .setWallpaper(w.fullpath, monitor)
+                                  .then(() => {
+                                    if (
+                                      preferences.colorGenTool &&
+                                      preferences.colorGenTool !== "none"
+                                    ) {
+                                      callColorGen(
+                                        w.fullpath,
+                                        preferences.colorGenTool,
+                                        preferences.matugenColorScheme
+                                      );
+                                    }
+                                  })
                                   .catch((err) => {
                                     showToast({
                                       title: "Unable to set wallpaper !",
