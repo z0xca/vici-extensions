@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { WallpaperEngine } from "./models/wallpaper-engine";
 import { callColorGen } from "./utils/colorgen";
 import { listEngines, engineFromPref } from "./utils/gen-engines";
+import { execPostCommand } from "./utils/hyprland";
 import { getImagesFromPath, Image } from "./utils/image";
 
 export default function DisplayGrid() {
@@ -139,6 +140,9 @@ export default function DisplayGrid() {
                                   preferences.matugenColorScheme
                                 );
                               }
+                              if (preferences.postCommand) {
+                                execPostCommand(preferences.postCommand, w.fullpath);
+                              }
                             })
                             .catch((err) => {
                               showToast({
@@ -196,6 +200,9 @@ export default function DisplayGrid() {
                                         preferences.colorGenTool,
                                         preferences.matugenColorScheme
                                       );
+                                    }
+                                    if (preferences.postCommand) {
+                                      execPostCommand(preferences.postCommand, w.fullpath);
                                     }
                                   })
                                   .catch((err) => {
