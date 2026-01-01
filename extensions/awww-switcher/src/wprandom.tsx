@@ -1,105 +1,113 @@
-import { showToast, Toast, getPreferenceValues } from "@vicinae/api";
+import { colorGeneratorFromPrefs, engineFromPref } from "./utils/gen-providers";
+import { displayError } from "./utils/commons";
 import { getImagesFromPath, Image } from "./utils/image";
-import { omniCommand } from "./utils/hyprland";
-import { WindowManagement as wm } from "@vicinae/api";
+import {
+  WindowManagement as wm,
+  showToast,
+  Toast,
+  getPreferenceValues,
+} from "@vicinae/api";
 
 export default async function RandomWallpaper() {
-  const path: string = getPreferenceValues().wallpaperPath;
-  const awwwTransition: string = getPreferenceValues().transitionType || "fade";
-  const awwwSteps: number = parseInt(getPreferenceValues().transitionSteps) || 90;
-  const awwwDuration: number = parseInt(getPreferenceValues().transitionDuration) || 3;
-  const awwwFPS: number = parseInt(getPreferenceValues().transitionFPS) || 60;
-  const colorGen: string = getPreferenceValues().colorGenTool || "none";
-  type Preferences = {
-    toggleVicinaeSetting: boolean;
-  };
   const preferences = getPreferenceValues<Preferences>();
-  const leftMonitorName: string = getPreferenceValues().leftMonitor;
-  const rightMonitorName: string = getPreferenceValues().rightMonitor;
-  const postProduction = getPreferenceValues().postProduction;
-  const postCommandString: string = getPreferenceValues().postCommand;
-
+  console.log(preferences);
   let isWMSupported = false;
 
-  try {
+  const loader = await showToast({
+    title: "Selecting random wallpaper...",
+    style: Toast.Style.Animated,
+  });
+
+  let monitors: wm.Screen[] = [];
+
+  wm.getScreens().then(
+    (screens) => {
+      monitors = screens;
+      isWMSupported = true;
+    },
+    (err) => {
+      isWMSupported = false;
+
+      showToast({
+        title:
+          "Could not get monitors, monitor specific features will be disabled",
+        message: err,
+        style: Toast.Style.Failure,
+      });
+    },
+  );
+
+  const monitorNames = isWMSupported ? monitors.map((m) => m.name) : [];
+  const wallpapers: Image[] = await getImagesFromPath(
+    preferences.wallpaperPath,
+  );
+
+  if (wallpapers.length === 0) {
+    await displayError(
+      "Unable to switch wallper",
+      `No images found in '${preferences.wallpaperPath}'`,
+    );
     await showToast({
-      title: "Selecting random wallpaper...",
-      style: Toast.Style.Animated,
+      title: `Failed changing wallpaper`,
+      style: Toast.Style.Failure,
     });
+    return;
+  }
 
-    let monitors: wm.Screen[] = [];
+  // Randomly select an image
+  const randomIndex = Math.floor(Math.random() * wallpapers.length);
+  const selectedWallpaper = wallpapers[randomIndex];
 
-    wm.getScreens().then(
-      (screens: wm.Screen[]) => {
-        monitors = screens;
-        isWMSupported = true;
+  // Looks like typescript didn't get that there will always be an image in that array,
+  // thanks to that guard statement earlier.
+  if (!selectedWallpaper) return;
+
+  // const isWide = selectedWallpaper.width / selectedWallpaper.height;
+
+  // if (
+  //   isWMSupported &&
+  //   isWide > 1.8 &&
+  //   monitorNames.includes(leftMonitorName) &&
+  //   monitorNames.includes(rightMonitorName)
+  // ) {
+  //   omniCommand(
+  //     selectedWallpaper.fullpath,
+  //     `${leftMonitorName}|${rightMonitorName}`,
+  //     awwwTransition,
+  //     awwwSteps,
+  //     awwwDuration,
+  //     preferences.toggleVicinaeSetting,
+  //     colorGen,
+  //     postProduction,
+  //     postCommandString,
+  //     awwwFPS,
+  //   );
+  // } else {
+  engineFromPref(preferences)
+    .setWallpaper(selectedWallpaper.fullpath)
+    .then(
+      async () => {
+        colorGeneratorFromPrefs(preferences)
+          .setColor(selectedWallpaper.fullpath)
+          .catch(async (err) => {
+            await displayError(
+              `Unable to call ${preferences.colorGenTool} !`,
+              err,
+            );
+          });
+
+        await showToast({
+          title: `Choose '${selectedWallpaper.name}' as wallpaper`,
+          message: `Set '${selectedWallpaper.name}' as wallpaper`,
+          style: Toast.Style.Success,
+        });
       },
-      (err: unknown) => {
-        isWMSupported = true;
-
-        showToast({
-          title: "Could not get monitors, monitor specific features will be disabled",
-          message: err,
+      async (err) => {
+        await displayError("Unable to set wallpaper !", err);
+        await showToast({
+          title: `Failed changing wallpaper`,
           style: Toast.Style.Failure,
         });
       },
     );
-
-    const monitorNames = isWMSupported ? monitors.map((m) => m.name) : [];
-    const wallpapers: Image[] = await getImagesFromPath(path);
-
-    if (wallpapers.length === 0) {
-      await showToast({
-        title: "No wallpapers found",
-        message: `No images found in '${path}'`,
-        style: Toast.Style.Failure,
-      });
-      return;
-    }
-
-    // Randomly select an image
-    const randomIndex = Math.floor(Math.random() * wallpapers.length);
-    const selectedWallpaper = wallpapers[randomIndex];
-    const isWide = selectedWallpaper.width / selectedWallpaper.height;
-
-    if (isWMSupported && isWide > 1.8 && monitorNames.includes(leftMonitorName) && monitorNames.includes(rightMonitorName)) {
-      omniCommand(
-        selectedWallpaper.fullpath,
-        `${leftMonitorName}|${rightMonitorName}`,
-        awwwTransition,
-        awwwSteps,
-        awwwDuration,
-        preferences.toggleVicinaeSetting,
-        colorGen,
-        postProduction,
-        postCommandString,
-        awwwFPS,
-      );
-    } else {
-      omniCommand(
-        selectedWallpaper.fullpath,
-        "ALL",
-        awwwTransition,
-        awwwSteps,
-        awwwDuration,
-        preferences.toggleVicinaeSetting,
-        colorGen,
-        postProduction,
-        postCommandString,
-        awwwFPS,
-      );
-    }
-
-    await showToast({
-      title: `Choose '${selectedWallpaper.name}' as wallpaper`,
-      message: `Set '${selectedWallpaper.name}' as wallpaper`,
-      style: Toast.Style.Success,
-    });
-  } catch (error) {
-    await showToast({
-      title: "Failed to set random wallpaper",
-      message: error instanceof Error ? error.message : "Unknown error occurred",
-      style: Toast.Style.Failure,
-    });
-  }
 }

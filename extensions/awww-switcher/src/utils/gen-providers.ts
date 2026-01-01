@@ -7,6 +7,15 @@ import { CustomEngine } from "../engines/wallpapers/custom";
 import { Hyprpaper } from "../engines/wallpapers/hyprpaper";
 import { MPVPaper } from "../engines/wallpapers/mpvpaper";
 import { PlasmaWallpaper } from "../engines/wallpapers/plasma";
+import { ColorGenerator } from "../models/colors";
+import { DummyGenerator } from "../engines/colors/dummy";
+import { Matugen } from "../engines/colors/matugen";
+import { PyWal } from "../engines/colors/pywal";
+import { WPGTK } from "../engines/colors/wpgtk";
+import { Schemer2 } from "../engines/colors/schemer2";
+import { ColorZ } from "../engines/colors/colorz";
+import { Haishoku } from "../engines/colors/haishoku";
+import { Wallust } from "../engines/colors/wallust";
 
 export const listEngines = (): WallpaperEngineMetadata[] => {
   return [
@@ -68,6 +77,37 @@ export const engineFromPref = (
 
     case "custom": {
       return new CustomEngine(prefs.customProviderCmd);
+    }
+  }
+};
+
+export const colorGeneratorFromPrefs = (prefs: Preferences): ColorGenerator => {
+  switch (prefs.colorGenTool) {
+    default:
+    case "none": {
+      return new DummyGenerator();
+    }
+    case "matugen": {
+      return new Matugen();
+    }
+    case "pywal": {
+      return new PyWal();
+    }
+    case "wpgtk": {
+      return new WPGTK();
+    }
+
+    case "schemer2": {
+      return new Schemer2();
+    }
+    case "colorz": {
+      return new ColorZ();
+    }
+    case "haishoku": {
+      return new Haishoku();
+    }
+    case "wallust": {
+      return new Wallust();
     }
   }
 };

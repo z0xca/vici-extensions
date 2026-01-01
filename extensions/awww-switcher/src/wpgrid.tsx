@@ -11,8 +11,13 @@ import {
 import { createHash } from "node:crypto";
 import { useEffect, useState } from "react";
 import { WallpaperEngine } from "./models/wallpaper-engine";
-import { listEngines, engineFromPref } from "./utils/gen-providers";
+import {
+  listEngines,
+  engineFromPref,
+  colorGeneratorFromPrefs,
+} from "./utils/gen-providers";
 import { getImagesFromPath, Image } from "./utils/image";
+import { displayError } from "./utils/commons";
 
 export default function DisplayGrid() {
   const [monitors, setMonitors] = useState<wm.Screen[]>([]);
@@ -127,12 +132,20 @@ export default function DisplayGrid() {
                         onAction={() => {
                           selectedEngine
                             .setWallpaper(w.fullpath)
-                            .catch((err) => {
-                              showToast({
-                                title: "Unable to set wallpaper !",
-                                message: err, // Seems like this does not render anywhere?
-                                style: Toast.Style.Failure,
-                              });
+                            .catch(async (err) => {
+                              await displayError(
+                                "Unable to set wallpaper !",
+                                err,
+                              );
+                            });
+
+                          colorGeneratorFromPrefs(preferences)
+                            .setColor(w.fullpath)
+                            .catch(async (err) => {
+                              await displayError(
+                                "Color generation failed !",
+                                err,
+                              );
                             });
                         }}
                       />
@@ -173,12 +186,20 @@ export default function DisplayGrid() {
                               onAction={() => {
                                 selectedEngine
                                   .setWallpaper(w.fullpath, monitor)
-                                  .catch((err) => {
-                                    showToast({
-                                      title: "Unable to set wallpaper !",
-                                      message: err,
-                                      style: Toast.Style.Failure,
-                                    });
+                                  .catch(async (err) => {
+                                    await displayError(
+                                      "Unable to set wallpaper !",
+                                      err,
+                                    );
+                                  });
+
+                                colorGeneratorFromPrefs(preferences)
+                                  .setColor(w.fullpath)
+                                  .catch(async (err) => {
+                                    await displayError(
+                                      "Color generation failed !",
+                                      err,
+                                    );
                                   });
                               }}
                             />
