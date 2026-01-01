@@ -1,9 +1,28 @@
 import { WindowManagement } from "@vicinae/api/dist";
 import { WallpaperEngine } from "../../models/wallpaper-engine";
-import { exec } from "child_process";
-import { promisify } from "util";
+import { execSync } from "child_process";
+import { execAsync } from "../../utils/commons";
 
-const execAsync = promisify(exec);
+const commandExists = (commandName: string): boolean => {
+  try {
+    execSync(`command -v ${commandName}`, { stdio: "pipe" });
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+const getWallpaperTool = (): "awww" | "swww" | null => {
+  if (commandExists("awww")) {
+    return "awww";
+  }
+
+  if (commandExists("swww")) {
+    return "swww";
+  }
+
+  return null;
+};
 
 export type AwwwTransitionType =
   | "none"
@@ -50,7 +69,7 @@ export class Awww implements WallpaperEngine {
     // I do not like this try catch syntax, hopefully i can later on find a better way to handle this. -Lyna
     try {
       await execAsync(
-        `awww img "${path}" -t ${this.type} --transition-step ${this.step} --transition-duration ${this.duration} --transition-fps ${this.fps} ${monitor ? `--output ${monitor.name}` : ""}`,
+        `${getWallpaperTool()} img "${path}" -t ${this.type} --transition-step ${this.step} --transition-duration ${this.duration} --transition-fps ${this.fps} ${monitor ? `--output ${monitor.name}` : ""}`,
       );
 
       return Promise.resolve();
