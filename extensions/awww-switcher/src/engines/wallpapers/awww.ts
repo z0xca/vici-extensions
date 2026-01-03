@@ -1,7 +1,7 @@
 import { WindowManagement } from "@vicinae/api/dist";
-import { WallpaperEngine } from "../../models/wallpaper-engine";
+import { WallpaperEngine } from "@models/wallpaper-engine";
 import { execSync } from "child_process";
-import { execAsync } from "../../utils/commons";
+import { execAsync } from "@utils/commons";
 
 const commandExists = (commandName: string): boolean => {
   try {

@@ -6,7 +6,9 @@
   "categories": [],
   "license": "MIT",
   "author": "sovereign",
-  "contributors": [],
+  "contributors": [
+    "0x4c756e61"
+  ],
   "pastContributors": [],
   "icon": "extension_icon.png",
   "commands": [

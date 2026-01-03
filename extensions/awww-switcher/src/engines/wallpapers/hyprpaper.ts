@@ -1,5 +1,5 @@
 import { WindowManagement } from "@vicinae/api/dist";
-import { WallpaperEngine } from "../../models/wallpaper-engine";
+import { WallpaperEngine } from "@models/wallpaper-engine";
 import { exec, execSync } from "child_process";
 import { promisify } from "util";
 
@@ -17,7 +17,7 @@ export class Hyprpaper implements WallpaperEngine {
 
   async setWallpaper(
     path: string,
-    monitor?: WindowManagement.Screen
+    monitor?: WindowManagement.Screen,
   ): Promise<void> {
     try {
       if (!monitor) {

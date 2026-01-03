@@ -44,12 +44,33 @@ export async function omniCommand(
     const splitImages = await runConvertSplit(path);
     const monitors = monitor.split("|");
 
-    const ok1 = await setWallpaperOnMonitor(splitImages[0], monitors[0], transition, steps, duration, fps);
-    const ok2 = await setWallpaperOnMonitor(splitImages[1], monitors[1], transition, steps, duration, fps);
+    const ok1 = await setWallpaperOnMonitor(
+      splitImages[0],
+      monitors[0],
+      transition,
+      steps,
+      duration,
+      fps,
+    );
+    const ok2 = await setWallpaperOnMonitor(
+      splitImages[1],
+      monitors[1],
+      transition,
+      steps,
+      duration,
+      fps,
+    );
 
     success = ok1 && ok2;
   } else {
-    success = await setWallpaperOnMonitor(path, monitor, transition, steps, duration, fps);
+    success = await setWallpaperOnMonitor(
+      path,
+      monitor,
+      transition,
+      steps,
+      duration,
+      fps,
+    );
   }
 
   if (success) {
@@ -105,7 +126,8 @@ export async function omniCommand(
     showToast({
       style: Toast.Style.Failure,
       title: "ERROR: Check awww-daemon status",
-      message: "Make sure awww is installed and its daemon is running (awww-daemon).",
+      message:
+        "Make sure awww is installed and its daemon is running (awww-daemon).",
     });
   }
 }
@@ -171,7 +193,10 @@ export const toggleVicinae = (): void => {
   exec(`vicinae vicinae://toggle`);
 };
 
-export const execPostCommand = async (postCommand: string, imagePath: string): Promise<boolean> => {
+export const execPostCommand = async (
+  postCommand: string,
+  imagePath: string,
+): Promise<boolean> => {
   console.log(postCommand);
   console.log(imagePath);
   return await new Promise<boolean>((resolve) => {

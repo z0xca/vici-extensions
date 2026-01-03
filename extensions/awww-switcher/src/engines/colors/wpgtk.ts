@@ -1,5 +1,5 @@
-import { ColorGenerator } from "../../models/colors";
-import { execAsync } from "../../utils/commons";
+import { ColorGenerator } from "@models/colors";
+import { execAsync } from "@utils/commons";
 
 export class WPGTK implements ColorGenerator {
   async setColor(wallpaperPath: string): Promise<void> {

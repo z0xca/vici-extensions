@@ -17,7 +17,10 @@ export interface Image {
 const parseImagesFromPath = async (path: string): Promise<string[]> => {
   try {
     // Recursively read all files in the directory and subdirectories
-    const entries = await readdir(path, { recursive: true, withFileTypes: true });
+    const entries = await readdir(path, {
+      recursive: true,
+      withFileTypes: true,
+    });
 
     return entries
       .filter((entry) => {
@@ -26,8 +29,13 @@ const parseImagesFromPath = async (path: string): Promise<string[]> => {
         return hyprpaperSupportedFormats.includes(ext);
       })
       .map((entry) => {
-        const relativePath = _path.join(entry.parentPath.replace(path, ""), entry.name);
-        return relativePath.startsWith("/") ? relativePath.slice(1) : relativePath;
+        const relativePath = _path.join(
+          entry.parentPath.replace(path, ""),
+          entry.name,
+        );
+        return relativePath.startsWith("/")
+          ? relativePath.slice(1)
+          : relativePath;
       });
   } catch (e) {
     console.error(e);

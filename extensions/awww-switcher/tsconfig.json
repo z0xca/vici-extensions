@@ -18,6 +18,11 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "paths": {
+      "@utils/*": ["./src/utils/*"],
+      "@engines/*": ["./src/engines/*"],
+      "@models/*": ["./src/models/*"]
+    }
   }
 }

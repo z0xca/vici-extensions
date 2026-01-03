@@ -1,5 +1,5 @@
 import { WindowManagement } from "@vicinae/api/dist";
-import { WallpaperEngine } from "../../models/wallpaper-engine";
+import { WallpaperEngine } from "@models/wallpaper-engine";
 import { sessionBus, MessageBus, Variant } from "dbus-next";
 
 interface PlasmaShellInterface {
