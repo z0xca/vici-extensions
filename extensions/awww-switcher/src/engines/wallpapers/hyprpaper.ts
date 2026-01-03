@@ -8,7 +8,7 @@ const execAsync = promisify(exec);
 export class Hyprpaper implements WallpaperEngine {
   serverIsRunning(): boolean {
     try {
-      execSync("hyprctl hyprpaper listloaded", { stdio: "ignore" });
+      execSync("ps aux | grep '[h]yprpaper'", { stdio: "ignore" });
       return true;
     } catch {
       return false;
@@ -20,14 +20,6 @@ export class Hyprpaper implements WallpaperEngine {
     monitor?: WindowManagement.Screen
   ): Promise<void> {
     try {
-      if (!monitor) {
-        await execAsync("hyprctl hyprpaper unload all");
-      } else {
-        await execAsync(`hyprctl hyprpaper wallpaper "${monitor.name},"`);
-      }
-
-      await execAsync(`hyprctl hyprpaper preload "${path}"`);
-
       const target = `${monitor ? monitor.name : ""},${path}`;
       await execAsync(`hyprctl hyprpaper wallpaper "${target}"`);
 
