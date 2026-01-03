@@ -1,9 +1,7 @@
 import { WindowManagement } from "@vicinae/api/dist";
 import { WallpaperEngine } from "@models/wallpaper-engine";
-import { exec, execSync } from "child_process";
-import { promisify } from "util";
-
-const execAsync = promisify(exec);
+import { execSync } from "child_process";
+import { execAsync } from "@utils/commons";
 
 export class Hyprpaper implements WallpaperEngine {
   serverIsRunning(): boolean {
