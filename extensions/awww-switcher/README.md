@@ -11,6 +11,7 @@ Dont feel like picking a wallpaper? Just run Random Wallpaper!
 <img src="assets/preview.png" alt="AWWW Switcher preview" width="500" />
 
 ## Features
+
 - Support for multiple backends:
   - [AWWW](https://codeberg.org/LGFae/awww) (formely known as SWWW)
   - hyprpaper
@@ -18,7 +19,7 @@ Dont feel like picking a wallpaper? Just run Random Wallpaper!
   - kde plasma
   - anything that has a cli utility via the "custom" backend !
 
-- Support for [AWWW](https://codeberg.org/LGFae/awww)'s fancy animations 
+- Support for [AWWW](https://codeberg.org/LGFae/awww)'s fancy animations
 - Display images in a nice grid ! (Recursively scan images)
 - One-tap to set wallpaper on all or a single monitor
   - Split wide wallpapers on 2 monitors using image magick
@@ -39,7 +40,6 @@ Dont feel like picking a wallpaper? Just run Random Wallpaper!
 
 - `Wallpaper grid` — Open the wallpaper browser and set a wallpaper
 - `Random Wallpaper` — Randomly apply a wallpaper
-
 
 ## First Usage
 

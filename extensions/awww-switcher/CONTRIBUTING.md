@@ -3,10 +3,11 @@
 Thank you for wanting to contribute to the AWWW Switcher extension ! We're so happy to have you on board with us, but before you start, there are a couple of things we need you to know. No worries, it's nothing more than just formalities :3
 
 ## Note regarding the usage of AI
+
 > [!note]
 > While we will not enforce those rules, we would like you to follow them in an effort to reduce maintainer fatigue, as we all have very limited time to work on the extension, and would appreciate it if we could spend it on making the experience better rather than babysitting AI.
 
-Agentic coding, *as in directing an AI agent to code for you*, is **strongly discouraged**. This is not only because AI agents usually miss the mark, but also because *we need someone to be accountable* for the code they contribute. If you absolutely need AI to work for you, **please refrain from contributing code** and either ask for a feature request on the vicinae discord server, or open an issue for us to see with all relevant details (technical or not).
+Agentic coding, _as in directing an AI agent to code for you_, is **strongly discouraged**. This is not only because AI agents usually miss the mark, but also because _we need someone to be accountable_ for the code they contribute. If you absolutely need AI to work for you, **please refrain from contributing code** and either ask for a feature request on the vicinae discord server, or open an issue for us to see with all relevant details (technical or not).
 
 If your contribution makes heavy use of AI code, **please disclose it** (along with the used model if known) in the pull request description to allow us maintainers to thoroughly review the code.
 
@@ -14,18 +15,23 @@ Consulting AI for tips and tricks, help with code quality and the like is accept
 
 ## Setting up your work environment
 
-While the CI that will build the extension and publish it to the store uses npm to build the extension, I (Lyna) personaly use bun as a runtime, so both should work just as great. 
+While the CI that will build the extension and publish it to the store uses npm to build the extension, I (Lyna) personaly use bun as a runtime, so both should work just as great.
+
 > [!warning]
 > The bun.lock file is ignored by git, as such please use npm to update the package.lock when editing the package.json, otherwise the CI will fail and the extension update get rejected.
 
 1. Install the dependencies using your package manager of choice
+
 ```bash
 npm install
 ```
+
 2. Start the development server
+
 ```bash
 npm run dev
 ```
+
 > [!tip]
 > In development mode, the extension will be automatically rebuilt and reloaded every time you do a change.
 
@@ -38,9 +44,10 @@ You're all set 🎉 We're eager to see your next contribution !
 
 #### Happy hacking !
 
-
 ##### Adding support for other engines and color generators
+
 ###### Wallpaper engines
+
 > [!note]
 > In the following document, the words "engine" and "backend" are used interchangibely
 
@@ -85,6 +92,7 @@ Once this is done, there's a couple more things you need to do to make sure the 
 Now your user can use your engine congrats !!
 
 ###### Color generators
+
 Adding support for a new color generator is even simpler !
 
 All this requires you to do, is to create a new file in `src/engines/colors/` to host your code and implement the `ColorGenerator` Class, for which we provide a template:
@@ -96,7 +104,9 @@ import { execAsync } from "@utils/commons";
 export class MyColorGenerator implements ColorGenerator {
   async setColor(wallpaperPath: string): Promise<void> {
     try {
-      await execAsync(`Command to change colors using a wallpaper '${wallpaperPath}' as source`);
+      await execAsync(
+        `Command to change colors using a wallpaper '${wallpaperPath}' as source`,
+      );
       return Promise.resolve();
     } catch (error) {
       if (error instanceof Error) {
@@ -108,6 +118,7 @@ export class MyColorGenerator implements ColorGenerator {
   }
 }
 ```
+
 Finally, you have to populate the `colorGeneratorFromPrefs` function in `src/utils/gen-providers.ts` and add a new entry to the "Color Generator" field in the package.json.
 
 Everything is ready, your color generator can now be used!
