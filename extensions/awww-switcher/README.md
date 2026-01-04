@@ -12,11 +12,11 @@ Dont feel like picking a wallpaper? Just run Random Wallpaper!
 
 ## Features
 - Support for multiple backends:
- - [AWWW](https://codeberg.org/LGFae/awww) (formely known as SWWW)
- - hyprpaper
- - mpvpaper
- - kde plasma
- - anything that has a cli utility via the "custom" backend !
+  - [AWWW](https://codeberg.org/LGFae/awww) (formely known as SWWW)
+  - hyprpaper
+  - mpvpaper
+  - kde plasma
+  - anything that has a cli utility via the "custom" backend !
 
 - Support for [AWWW](https://codeberg.org/LGFae/awww)'s fancy animations 
 - Display images in a nice grid ! (Recursively scan images)
