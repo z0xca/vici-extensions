@@ -15,7 +15,7 @@ Consulting AI for tips and tricks, help with code quality and the like is accept
 ## Setting up your work environment
 
 While the CI that will build the extension and publish it to the store uses npm to build the extension, I (Lyna) personaly use bun as a runtime, so both should work just as great. 
-> [!important]
+> [!warning]
 > The bun.lock file is ignored by git, as such please use npm to update the package.lock when editing the package.json, otherwise the CI will fail and the extension update get rejected.
 
 1. Install the dependencies using your package manager of choice
@@ -26,10 +26,10 @@ npm install
 ```bash
 npm run dev
 ```
-> [!note]
+> [!tip]
 > In development mode, the extension will be automatically rebuilt and reloaded every time you do a change.
 
-> [!important]
+> [!caution]
 > Make sure to back up your AWWW switcher settings, as the development extension WILL REPLACE your existing one, even after you kill the development process.
 
 Learn more about extension development in the official [vicinae documentation](https://docs.vicinae.com/extensions/introduction).
