@@ -76,7 +76,7 @@ export const engineFromPref = (
     }
 
     case "custom": {
-      return new CustomEngine(prefs.customProviderCmd);
+      return new CustomEngine(prefs.customEngineCmd);
     }
   }
 };
@@ -88,7 +88,7 @@ export const colorGeneratorFromPrefs = (prefs: Preferences): ColorGenerator => {
       return new DummyGenerator();
     }
     case "matugen": {
-      return new Matugen();
+      return new Matugen(prefs.matugenColorScheme);
     }
     case "pywal": {
       return new PyWal();
