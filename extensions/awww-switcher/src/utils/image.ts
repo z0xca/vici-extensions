@@ -1,4 +1,4 @@
-import { opendir, readdir, readFile, stat } from "fs/promises";
+import { readdir, stat } from "fs/promises";
 import { createReadStream } from "fs";
 import * as _path from "path";
 import { imageSize } from "image-size";
@@ -43,37 +43,49 @@ const parseImagesFromPath = async (path: string): Promise<string[]> => {
   }
 };
 
-const processImage = async (path: string): Promise<Image> => {
+const processImage = async (
+  path: string,
+  showExtraData: boolean = true,
+): Promise<Image> => {
   try {
-    const buffer = await new Promise<Buffer>((resolve, reject) => {
-      const stream = createReadStream(path, { highWaterMark: 32768 });
-      const chunks: Buffer[] = [];
-      stream.on("data", (chunk) => chunks.push(chunk as Buffer));
-      stream.on("end", () => resolve(Buffer.concat(chunks)));
-      stream.on("error", reject);
-    });
-
-    const dimensions = imageSize(buffer);
-    if (!dimensions.width || !dimensions.height) {
-      throw new Error("Invalid image dimensions");
-    }
-
     const stats = await stat(path);
-    return {
-      width: dimensions.width,
-      height: dimensions.height,
+    const output = {
+      width: 0,
+      height: 0,
       birthtime: stats.birthtime.toLocaleString(),
       size: stats.size / (1024 * 1024),
       fullpath: path,
       name: _path.basename(path),
     };
+
+    if (showExtraData) {
+      const buffer = await new Promise<Buffer>((resolve, reject) => {
+        const stream = createReadStream(path, { highWaterMark: 32768 });
+        const chunks: Buffer[] = [];
+        stream.on("data", (chunk) => chunks.push(chunk as Buffer));
+        stream.on("end", () => resolve(Buffer.concat(chunks)));
+        stream.on("error", reject);
+      });
+
+      const dimensions = imageSize(buffer);
+      if (!dimensions.width || !dimensions.height) {
+        throw new Error("Invalid image dimensions");
+      }
+
+      output.width = dimensions.width;
+      output.height = dimensions.height;
+    }
+
+    return output;
   } catch (e) {
     const message = e instanceof Error ? e.message : String(e);
     console.error(`⚠️ Skipping ${path}:`, message);
+
     const stats = await stat(path).catch(() => ({
       size: 0,
       birthtime: new Date(),
     }));
+
     return {
       width: 1920,
       height: 1080,
@@ -85,10 +97,15 @@ const processImage = async (path: string): Promise<Image> => {
   }
 };
 
-export const getImagesFromPath = async (path: string): Promise<Image[]> => {
+export const getImagesFromPath = async (
+  path: string,
+  showExtraData: boolean = true,
+): Promise<Image[]> => {
   try {
     console.time("🚀 TOTAL SPEED");
+    console.time("parseImagesFromPath");
     const imagesPaths = await parseImagesFromPath(path);
+    console.timeEnd("parseImagesFromPath");
     console.log(`📁 Found ${imagesPaths.length} images`);
 
     const concurrencyLimit = 16; // 16 works for me, need feedback on slower machines
@@ -97,10 +114,12 @@ export const getImagesFromPath = async (path: string): Promise<Image[]> => {
 
     for (let i = 0; i < imagesPaths.length; i += concurrencyLimit) {
       const batch = imagesPaths.slice(i, i + concurrencyLimit);
+      console.time("processImage");
       const batchResults = await Promise.all(
-        batch.map((img) => processImage(_path.join(path, img))),
+        batch.map((img) => processImage(_path.join(path, img), showExtraData)),
       );
       results.push(...batchResults);
+      console.timeEnd("processImage");
     }
 
     console.timeEnd("🚀 TOTAL SPEED");

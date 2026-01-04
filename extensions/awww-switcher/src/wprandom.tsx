@@ -40,6 +40,7 @@ export default async function RandomWallpaper() {
   const monitorNames = isWMSupported ? monitors.map((m) => m.name) : [];
   const wallpapers: Image[] = await getImagesFromPath(
     preferences.wallpaperPath,
+    false,
   );
 
   if (wallpapers.length === 0) {

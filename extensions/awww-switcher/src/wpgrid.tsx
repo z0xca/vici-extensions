@@ -50,7 +50,7 @@ export default function DisplayGrid() {
         style: Toast.Style.Failure,
       });
     });
-    getImagesFromPath(preferences.wallpaperPath)
+    getImagesFromPath(preferences.wallpaperPath, preferences.showImageDetails)
       .then((ws) => {
         setIsLoading(false);
         setWallpapers(ws);
