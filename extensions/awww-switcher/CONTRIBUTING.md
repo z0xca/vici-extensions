@@ -15,7 +15,7 @@ Consulting AI for tips and tricks, help with code quality and the like is accept
 ## Setting up your work environment
 
 While the CI that will build the extension and publish it to the store uses npm to build the extension, I (Lyna) personaly use bun as a runtime, so both should work just as great. 
-> [!note]
+> [!important]
 > The bun.lock file is ignored by git, as such please use npm to update the package.lock when editing the package.json, otherwise the CI will fail and the extension update get rejected.
 
 1. Install the dependencies using your package manager of choice
@@ -26,7 +26,7 @@ npm install
 ```bash
 npm run dev
 ```
-> [!info]
+> [!note]
 > In development mode, the extension will be automatically rebuilt and reloaded every time you do a change.
 
 > [!important]
