@@ -247,6 +247,52 @@
       "default": "none"
     },
     {
+      "name": "matugenColorScheme",
+      "title": "Matugen color scheme",
+      "description": "Only used when the Color Generator is Matugen. Passed to matugen via --type.",
+      "required": false,
+      "type": "dropdown",
+      "data": [
+        {
+          "title": "Content",
+          "value": "scheme-content"
+        },
+        {
+          "title": "Expressive",
+          "value": "scheme-expressive"
+        },
+        {
+          "title": "Fidelity",
+          "value": "scheme-fidelity"
+        },
+        {
+          "title": "Fruit Salad",
+          "value": "scheme-fruit-salad"
+        },
+        {
+          "title": "Monochrome",
+          "value": "scheme-monochrome"
+        },
+        {
+          "title": "Neutral",
+          "value": "scheme-neutral"
+        },
+        {
+          "title": "Rainbow",
+          "value": "scheme-rainbow"
+        },
+        {
+          "title": "Tonal Spot (default)",
+          "value": "scheme-tonal-spot"
+        },
+        {
+          "title": "Vibrant",
+          "value": "scheme-vibrant"
+        }
+      ],
+      "default": "scheme-tonal-spot"
+    },
+    {
       "label": "Toggle Vicinae",
       "name": "toggleVicinaeSetting",
       "title": "Toggle Vicinae",
