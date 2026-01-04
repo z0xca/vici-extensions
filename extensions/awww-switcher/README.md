@@ -2,30 +2,37 @@
 
 # AWWW Switcher (Vicinae Extension)
 
-Pick a wallpaper from a grid and apply with awww with a transition of your choosing. You can even generate a color palette from the wallpaper!
+Pick a wallpaper from a grid and apply it with awww with a transition of your choosing. You can even generate a color palette from the wallpaper!
+
+Not using [AWWW](https://codeberg.org/LGFae/awww)/SWWW ? No problem! AWWW Switcher has support for many backends, including hyprpaper, mpvpaper and kde plasma ! And if your system is not supported you can always use the "custom" option to change your wallpaper just like if you were doing it on the command line !
 
 Dont feel like picking a wallpaper? Just run Random Wallpaper!
 
 <img src="assets/preview.png" alt="AWWW Switcher preview" width="500" />
 
 ## Features
+- Support for multiple backends:
+ - [AWWW](https://codeberg.org/LGFae/awww) (formely known as SWWW)
+ - hyprpaper
+ - mpvpaper
+ - kde plasma
+ - anything that has a cli utility via the "custom" backend !
 
-- Choose a path in extension settings
-- Grid layout of images in the path
-- One-tap to set wallpaper via `awww` on all or a single monitor
-  - Split one images into multiple wallpapers with ImageMagick
-- Add a sweet awww transition, configure the duration and steps too
-- Add a color generator to run on the image
-- Use Imagemagick to blur, grayscale, negate the selected image for a lock screen, etc...
+- Support for [AWWW](https://codeberg.org/LGFae/awww)'s fancy animations 
+- Display images in a nice grid ! (Recursively scan images)
+- One-tap to set wallpaper on all or a single monitor
+  - Split wide wallpapers on 2 monitors using image magick
+- Automatically calls your favorite color generator like pywal or matugen ! See [supported generators](#supported-color-generators)
+- Apply countless filters to your wallpapers !
 - Set a random wallpaper.
 
 ## Requirements
 
-- Linux with Hyprland
-- [vicinae](https://github.com/vicinaehq/vicinae) v0.12.2 or higher
-- [awww](https://codeberg.org/LGFae/awww)
+- Linux
+- [vicinae](https://github.com/vicinaehq/vicinae) v0.16.14 or higher
+- Any supported backend
 - Images in one of: jpg, jpeg, png, webp, gif
-- Optional: Color generator like [matugen](https://github.com/InioX/matugen)
+- Optional: Any supported color generator like [matugen](https://github.com/InioX/matugen)
 - Optional: ImageMagick for splitting one image in half for two wallpapers or for post processing like blur
 
 ## Commands
@@ -33,50 +40,6 @@ Dont feel like picking a wallpaper? Just run Random Wallpaper!
 - `Wallpaper grid` — Open the wallpaper browser and set a wallpaper
 - `Random Wallpaper` — Randomly apply a wallpaper
 
-## Extension Preferences
-
-<img src="assets/settings.png" alt="AWWW Switcher Settings" width="500" />
-
-- Wallpaper Path
-- AWWW Transition Type
-  - Default = `random`
-- AWWW Duration (In seconds)
-  - Default = `3`
-- AWWW Transition Step
-  - Default = `90`
-- AWWW Transition FPS
-  - Default = `60`
-- Color Generator
-  - Default = `none`
-- Grid Rows
-  - Default = `4`
-- Toggle Vicinae on Selection
-  - Default = `true`
-- Show Image Details
-  - Default = `true`
-- ImageMagick Post-Production
-  - Default = `none`
-- leftmonitor
-  - Default = `unset`
-- rightmonitor
-  - Default = `unset`
-
-## Quick start (development)
-
-```bash
-npm install
-npm run dev
-```
-
-This starts the extension in Vicinae dev mode. Follow Vicinae’s docs for how to connect a dev extension if needed.
-
-## Build (production)
-
-```bash
-npm run build
-```
-
-This produces a production bundle that can be distributed/installed per Vicinae guidelines.
 
 ## First Usage
 
@@ -121,7 +84,7 @@ You can select the duration in seconds using the `AWWW Duration (In seconds)` dr
 
 You can select the step using the `AWWW Transition Step` dropdown in the extension preferences. You have as fast as instant and the slowest possible.
 
-## Color Generator:
+## Supported Color Generators
 
 Use a tool to pull colors out of a wallpaper for themeing purposes. Below is a list of tools supported:
 
