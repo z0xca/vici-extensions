@@ -102,6 +102,8 @@ export default function DisplayGrid() {
       });
   }, []);
 
+  console.log(connectedMonitors.includes(preferences.leftMonitor));
+
   return (
     <Grid
       searchBarPlaceholder="Filter wallpapers..."
@@ -175,13 +177,13 @@ export default function DisplayGrid() {
                       <>
                         <ActionPanel.Section title="Split on Monitors">
                           {connectedMonitors.includes(
-                            preferences.leftMonitorName,
+                            preferences.leftMonitor,
                           ) &&
                             connectedMonitors.includes(
-                              preferences.rightMonitorName,
+                              preferences.leftMonitor,
                             ) && (
                               <Action
-                                title={`Split wallpaper ${preferences.leftMonitorName} | ${preferences.rightMonitorName}`}
+                                title={`Split wallpaper ${preferences.leftMonitor} | ${preferences.leftMonitor}`}
                                 icon={Icon.ArrowsExpand}
                                 onAction={async () =>
                                   await handleImageSplitting(w.fullpath)
