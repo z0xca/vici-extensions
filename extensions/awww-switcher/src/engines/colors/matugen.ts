@@ -7,7 +7,7 @@ export class Matugen implements ColorGenerator {
   async setColor(wallpaperPath: string): Promise<void> {
     try {
       await execAsync(
-        `matugen image '${wallpaperPath}' --type ${this.colorScheme}`,
+        `matugen image '${wallpaperPath}' --type ${this.colorScheme} --source-color-index 0`,
       );
       return Promise.resolve();
     } catch (error) {
